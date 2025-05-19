@@ -1,0 +1,44 @@
+.custom-footer {
+  background-color: #4a3c31; /* un café oscuro */
+  color: #d6cfc7; /* gris claro */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.custom-footer h5 {
+  font-weight: 700;
+}
+
+.footer-info p,
+.footer-contact p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.footer-contact p + p {
+  margin-top: 0.25rem;
+}
+
+.footer-social a.social-icon:hover {
+  color: #c4a484; /* color café más claro al pasar el mouse */
+  transition: color 0.3s ease;
+}
+
+.custom-divider {
+  border-top: 1px solid #c4a484;
+  margin: 1rem 0 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .custom-footer .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer-social {
+    margin-top: 1rem;
+  }
+}
+
+.custom-footer .container {
+  padding-left: 5rem;  /* ajusta según necesites */
+  padding-right: 5rem;
+}
