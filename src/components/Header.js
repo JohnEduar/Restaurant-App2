@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
+
 const Header = () => {
   return (
     <header id="main-header">
@@ -22,7 +23,7 @@ const Header = () => {
           <div className="navbar-nav">
             <Link className="nav-link active" aria-current="page" to="/">Inicio</Link>
             <Link className="nav-link" to="/">Buscar</Link>
-            <Link className="nav-link" to="/">Nuevo</Link>
+            <Link className="nav-link" to="/new">nuevo</Link>
           </div>
         </div>
       </div>

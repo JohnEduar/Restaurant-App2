@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import RestaurantCards from '../components/RestaurantCards';
 import RestaurantModal from '../components/RestaurantModal';
@@ -7,7 +7,7 @@ const Home = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [modalShow, setModalShow] = useState(false);
 
-  const restaurantes = [
+  const restaurantesQuemados = [
     {
       id: 1,
       name: 'La Cumbre del Sabor',
@@ -47,12 +47,25 @@ const Home = () => {
     setSelectedRestaurant(null);
   };
 
+  const [restaurantesNuevos, setRestaurantesNuevos] = useState([]);
+
+  useEffect(() => {
+    const nuevos = JSON.parse(localStorage.getItem('restaurantesNuevos')) || [];
+    const nuevosConId = nuevos.map((rest, index) => ({
+      id: rest.id || Date.now() + index,
+      ...rest,
+    }));
+    setRestaurantesNuevos(nuevosConId);
+  }, []);
+
+  const restaurantesCombinados = [...restaurantesQuemados, ...restaurantesNuevos];
+
   return (
     <>
       <Hero />
       <div id="restaurantes" className="container mt-5 mb-5">
         <div className="row g-4">
-          {restaurantes.map((restaurant) => (
+          {restaurantesCombinados.map((restaurant) => (
             <div key={restaurant.id} className="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
               <RestaurantCards
                 {...restaurant}
@@ -84,3 +97,4 @@ const Home = () => {
 };
 
 export default Home;
+       

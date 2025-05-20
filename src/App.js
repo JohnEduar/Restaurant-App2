@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Footer from './components/Footer';
+import New from './pages/New';
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         {/* Define las demás rutas */}
         {/* <Route path="/buscar" element={<Buscar />} /> */}
-        {/* <Route path="/nuevo" element={<Nuevo />} /> */}
+        <Route path="/New" element={<New />} /> 
       </Routes>
       <Footer />
     </Router>
