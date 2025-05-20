@@ -22,7 +22,7 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
             <Link className="nav-link active" aria-current="page" to="/">Inicio</Link>
-            <Link className="nav-link" to="/">Buscar</Link>
+            <Link className="nav-link" to="/Search">Buscar</Link>
             <Link className="nav-link" to="/new">nuevo</Link>
           </div>
         </div>
