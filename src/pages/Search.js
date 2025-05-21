@@ -71,14 +71,21 @@ const Search = () => {
   return (
     <div className="container py-5">
       <h2 className="text-center mb-4">Buscar Restaurante</h2>
-      <input
-        type="text"
-        value={query}
-        onChange={handleSearch}
-        placeholder="Escribe el nombre del restaurante..."
-        className="form-control mb-4"
-        style={{ fontSize: '1.1rem', padding: '12px' }}
-      />
+        <div className="position-relative mb-5" style={{ maxWidth: '500px', margin: '0 auto' }}>
+          <input
+            type="text"
+            value={query}
+            onChange={handleSearch}
+            placeholder="Buscar restaurante..."
+            className="form-control form-control-lg rounded-pill shadow-sm ps-5 animated-input"
+          />
+          <span
+            className="position-absolute top-50 start-0 translate-middle-y ps-3 text-muted"
+            style={{ pointerEvents: 'none' }}
+          >
+            <i className="bi bi-search"></i>
+          </span>
+        </div>
 
       <div className="row g-4">
         {results.length > 0 ? (
