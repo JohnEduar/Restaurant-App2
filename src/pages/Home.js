@@ -1,100 +1,79 @@
 import React, { useState, useEffect } from 'react';
-import Hero from '../components/Hero';
-import RestaurantCards from '../components/RestaurantCards';
-import RestaurantModal from '../components/RestaurantModal';
+import { getRestaurants, initilizeRestaurants, deleteRestaurant } from '../service/firebaseRestaurantService';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
-  const [modalShow, setModalShow] = useState(false);
-
-  const restaurantesQuemados = [
-    {
-      id: 1,
-      name: 'La Cumbre del Sabor',
-      description: 'Un restaurante de cocina internacional que combina lo mejor de la gastronomía europea y asiática en un ambiente elegante con vistas panorámicas',
-      image: 'https://images.unsplash.com/photo-1552566626-2d907dab0dff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      address: 'Calle 123, Bogotá',
-      phone: '+57 300 1234567',
-      hours: 'Lunes a Domingo: 12pm - 11pm',
-    },
-    {
-      id: 2,
-      name: 'La Casa Gourmet',
-      description: 'Experiencia gastronómica con platos internacionales. Ambiente acogedor y elegante, ideal para cenas románticas o celebraciones especiales',
-      image: 'https://images.unsplash.com/photo-1546195643-70f48f9c5b87?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      address: 'Carrera 45, Medellín',
-      phone: '+57 300 7654321',
-      hours: 'Martes a Domingo: 1pm - 10pm',
-    },
-    {
-      id: 3,
-      name: 'El Refugio del Valle',
-      description: 'Ofrece platos tradicionales de la cocina colombiana, con ingredientes frescos de la región, en un entorno acogedor y rústico rodeado de naturaleza',
-      image: 'https://images.unsplash.com/photo-1567745219000-b99afacf5ef6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      address: 'Avenida 10, Cali',
-      phone: '+57 300 9876543',
-      hours: 'Miércoles a Lunes: 11am - 9pm',
-    },
-  ];
-
-  const handleShowModal = (restaurant) => {
-    setSelectedRestaurant(restaurant);
-    setModalShow(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalShow(false);
-    setSelectedRestaurant(null);
-  };
-
-  const [restaurantesNuevos, setRestaurantesNuevos] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const nuevos = JSON.parse(localStorage.getItem('restaurantesNuevos')) || [];
-    const nuevosConId = nuevos.map((rest, index) => ({
-      id: rest.id || Date.now() + index,
-      ...rest,
-    }));
-    setRestaurantesNuevos(nuevosConId);
+    const fetchRestaurants = async () => {
+      let data = await getRestaurants();
+      if (data.length === 0) {
+        await initilizeRestaurants();
+        data = await getRestaurants();
+      }
+      setRestaurants(data);
+      setLoading(false);
+    };
+    fetchRestaurants();
   }, []);
 
-  const restaurantesCombinados = [...restaurantesQuemados, ...restaurantesNuevos];
+const handleEdit = (id) => {
+  navigate(`/editar/${id}`);
+};
+
+const handleDelete = async (id) => {
+  try {
+    if (window.confirm('¿Seguro que deseas eliminar este restaurante?')) {
+      await deleteRestaurant(id);
+      console.log('Eliminado en Firestore:', id);
+      setRestaurants(restaurants.filter(r => r.id !== id));
+    }
+  } catch (error) {
+    alert('Error eliminando: ' + error.message);
+    console.error(error);
+  }
+};
+
+  if (loading) return <div>Cargando restaurantes...</div>;
 
   return (
-    <>
-      <Hero />
-      <div id="restaurantes" className="container mt-5 mb-5">
-        <div className="row g-4">
-          {restaurantesCombinados.map((restaurant) => (
-            <div key={restaurant.id} className="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
-              <RestaurantCards
-                {...restaurant}
-                onViewMore={() => handleShowModal(restaurant)}
-              />
+    <div className="container mt-4">
+      <h1>Restaurantes</h1>
+      <div className="row">
+        {restaurants.map(rest => (
+          <div className="col-md-4 mb-4" key={rest.id}>
+            <div className="card h-100">
+              <img src={rest.image} className="card-img-top" alt={rest.name} />
+              <div className="card-body">
+                <h5 className="card-title">{rest.name}</h5>
+                <p className="card-text">{rest.description}</p>
+                <p><b>Dirección:</b> {rest.address}</p>
+                <p><b>Teléfono:</b> {rest.phone}</p>
+                <p><b>Horario:</b> {rest.hours}</p>
+                <div className="d-flex justify-content-between mt-3">
+                  <button
+                    className="btn btn-warning"
+                    onClick={() => handleEdit(rest.id)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDelete(rest.id)}
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-
-      <RestaurantModal
-        show={modalShow}
-        handleClose={handleCloseModal}
-        restaurant={selectedRestaurant}
-      />
-
-      <section className="container my-5" id="saber-mas">
-        <h2 className="mb-4">Sobre Nosotros</h2>
-        <p>
-          Somos una plataforma dedicada a conectar a los amantes de la buena comida con los mejores restaurantes de Colombia. 
-          Nuestro objetivo es ofrecer una experiencia gastronómica única, facilitando la exploración y el descubrimiento de opciones variadas y deliciosas.
-        </p>
-        <p>
-          Valoramos la calidad, la autenticidad y el sabor, apoyando a los restaurantes locales y brindando a nuestros usuarios una guía confiable y actualizada.
-        </p>
-      </section>
-    </>
+    </div>
   );
 };
 
 export default Home;
-       
