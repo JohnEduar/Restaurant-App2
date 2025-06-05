@@ -66,3 +66,15 @@
   margin-left: auto;   
   margin-right: auto;
 }
+
+.animated-input {
+  transition: all 0.3s ease;
+  border: 1px solid #ced4da;
+}
+
+.animated-input:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 10px rgba(108, 99, 255, 0.4);
+  background-color: #fff;
+  transform: scale(1.02); /* leve agrandamiento */
+}
