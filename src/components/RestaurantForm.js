@@ -96,4 +96,5 @@ const RestaurantForm = () => {
   );
 };
 
-export default RestaurantForm;
+export default RestaurantForm;
+

@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Footer from './components/Footer';
 import New from './pages/New';
 import Search from './pages/Search';
+import EditRestaurant from './pages/EditRestaurant';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         {/* <Route path="/buscar" element={<Buscar />} /> */}
         <Route path="/New" element={<New />} />
         <Route path="/Search" element={<Search />} />
+        <Route path="/editar/:id" element={<EditRestaurant />} />
       </Routes>
       <Footer />
     </Router>
