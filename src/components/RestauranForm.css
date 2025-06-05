@@ -1,0 +1,77 @@
+.restaurant-form-bg {
+  min-height: 80vh;
+  padding: 50px 20px;
+  background-image: url(https://images.unsplash.com/photo-1576723664541-23f84c3f93fb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.restaurant-form-container {
+  width: 100%;
+  max-width: 600px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px 40px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #4B3B2B;
+}
+
+.restaurant-form-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.restaurant-form-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.restaurant-form-textarea,
+.restaurant-form-input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1.5px solid #8C6A43;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #4B3B2B;
+  font-weight: 600;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+.restaurant-form-textarea:focus,
+.restaurant-form-input:focus {
+  border-color: #C75B39;
+}
+
+.restaurant-form-textarea {
+  resize: vertical;
+}
+
+.restaurant-form-button {
+  width: 100%;
+  padding: 14px 0;
+  border-radius: 20px;
+  background-color: #C75B39;
+  color: #FFF8F0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(199, 91, 57, 0.6);
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.restaurant-form-button:hover {
+  background-color: #A64728;
+}
